@@ -12,13 +12,13 @@ namespace coursework_examination_system
 {
     public partial class Form1 : Form
     {
-        private UserClass user;
+        public static UserClass user;
         private LoginForm loginForm;
 
         public Form1(UserClass user, LoginForm loginForm)
         {
             InitializeComponent();
-            this.user = user;
+            Form1.user = user;
             this.loginForm = loginForm;
         }
 
