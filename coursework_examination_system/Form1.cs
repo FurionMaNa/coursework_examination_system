@@ -33,5 +33,12 @@ namespace coursework_examination_system
         {
             loginForm.Close();
         }
+
+        private void createTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConstructorTestForm constructorTestForm = new ConstructorTestForm();
+            constructorTestForm.MdiParent = this;
+            constructorTestForm.Show();
+        }
     }
 }
