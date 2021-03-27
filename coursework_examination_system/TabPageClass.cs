@@ -41,6 +41,7 @@ namespace coursework_examination_system
         public System.Windows.Forms.GroupBox groupBox2;
         public String filePath = "";
         public TextBox textBoxQuestion = new TextBox();
+        public bool textBoxCreate = false;
         public PictureBox pictureBox = new PictureBox();
 
         public List<ObjectAnswersClass> objectAnswers = new List<ObjectAnswersClass>();
@@ -80,9 +81,9 @@ namespace coursework_examination_system
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(5, 6);
+            this.groupBox2.Location = new System.Drawing.Point(5, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(613, 225);
+            this.groupBox2.Size = new System.Drawing.Size(/*190*/613, 225);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Вопрос";

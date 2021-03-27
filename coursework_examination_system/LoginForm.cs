@@ -44,7 +44,8 @@ namespace coursework_examination_system
                 {
                     MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            } else
+            } 
+            else
             {
                 MessageBox.Show("Логин или пароль должны быть указаны!", "Пустые поля",  MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
