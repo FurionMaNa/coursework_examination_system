@@ -24,16 +24,25 @@ namespace coursework_examination_system
             if (textBox1.Text.Trim().Length>0 && textBox2.Text.Trim().Length > 0)
             {
                 AuthorizationClass authorization = new AuthorizationClass(textBox1.Text, textBox2.Text);
-                String response = SendRequestClass.PostRequestAsync("login", JsonConvert.SerializeObject(authorization)).Result;
-                Console.WriteLine(response);
-                UserClass user  = JsonConvert.DeserializeObject<UserClass>(response);
-                if (user != null) {
-                    Form1 form1 = new Form1(user, this);
-                    form1.Show();
-                    this.Visible = false;
-                } else
+                try
                 {
-                    MessageBox.Show("Неверный логин или пароль!", "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    String response = SendRequestClass.PostRequestAsync("login", JsonConvert.SerializeObject(authorization)).Result;
+                    Console.WriteLine(response);
+                    UserClass user = JsonConvert.DeserializeObject<UserClass>(response);
+                    if (user != null)
+                    {
+                        Form1 form1 = new Form1(user, this);
+                        form1.Show();
+                        this.Visible = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Неверный логин или пароль!", "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                } 
+                catch(Exception exception)
+                {
+                    MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             } else
             {

@@ -12,91 +12,31 @@ namespace coursework_examination_system
 {
     public partial class ConstructorTestForm : Form
     {
-
-        struct objectAnswer
-        {
-            public CheckBox checkBox;
-            public TextBox textBox;
-            public Button delButton;
-        }
-
-        private List<objectAnswer> objectAnswers = new List<objectAnswer>();
-
+        
         public ConstructorTestForm()
         {
             InitializeComponent();
-            objectAnswer objectA;
-            //////////////////////1//////////////////////////
-            objectA.checkBox = checkBox1;
-            objectA.textBox = textBox2;
-            objectA.delButton = button7;
-            objectAnswers.Add(objectA);
-            //////////////////////2//////////////////////////
-            objectA.checkBox = checkBox2;
-            objectA.textBox = textBox3;
-            objectA.delButton = button8;
-            objectAnswers.Add(objectA);
-            //////////////////////3//////////////////////////
-            objectA.checkBox = checkBox3;
-            objectA.textBox = textBox4;
-            objectA.delButton = button9;
-            objectAnswers.Add(objectA);
-            ///////////////////////4/////////////////////////
-            objectA.checkBox = checkBox4;
-            objectA.textBox = textBox5;
-            objectA.delButton = button10;
-            objectAnswers.Add(objectA);
-            ///////////////////////5/////////////////////////
-            objectA.checkBox = checkBox5;
-            objectA.textBox = textBox6;
-            objectA.delButton = button11;
-            objectAnswers.Add(objectA);
-            ///////////////////////6/////////////////////////
-            objectA.checkBox = checkBox6;
-            objectA.textBox = textBox7;
-            objectA.delButton = button12;
-            objectAnswers.Add(objectA);
-            ///////////////////////7/////////////////////////
-            objectA.checkBox = checkBox7;
-            objectA.textBox = textBox8;
-            objectA.delButton = button13;
-            objectAnswers.Add(objectA);
-            ///////////////////////8/////////////////////////
-            objectA.checkBox = checkBox8;
-            objectA.textBox = textBox9;
-            objectA.delButton = button14;
-            objectAnswers.Add(objectA);
-            ///////////////////////9/////////////////////////
-            objectA.checkBox = checkBox9;
-            objectA.textBox = textBox10;
-            objectA.delButton = button15;
-            objectAnswers.Add(objectA);
-
+            button1_Click(new Object(), new EventArgs());
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < objectAnswers.Count; i++)
+            for (int i = 0; i < ((TabPageClass)tabControl1.SelectedTab).objectAnswers.Count(); i++)
             {
-                if (!objectAnswers[i].checkBox.Visible)
+                if (!((TabPageClass)tabControl1.SelectedTab).objectAnswers[i].checkBox.Visible)
                 {
-                    objectAnswers[i].checkBox.Visible = true;
-                    objectAnswers[i].textBox.Visible = true;
-                    objectAnswers[i].delButton.Visible = true;
+                    ((TabPageClass)tabControl1.SelectedTab).objectAnswers[i].checkBox.Visible = true;
+                    ((TabPageClass)tabControl1.SelectedTab).objectAnswers[i].textBox.Visible = true;
+                    ((TabPageClass)tabControl1.SelectedTab).objectAnswers[i].delButton.Visible = true;
                     break;
                 }
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private ObjectAnswersClass findBlock(String nameButton)
         {
-
-        }
-
-        private objectAnswer findBlock(String nameButton)
-        {
-            objectAnswer resultObject = new objectAnswer();
-            objectAnswers.ForEach(delegate (objectAnswer objectA)
+            ObjectAnswersClass resultObject = new ObjectAnswersClass();
+            ((TabPageClass)tabControl1.SelectedTab).objectAnswers.ForEach(delegate (ObjectAnswersClass objectA)
             {
                 if (objectA.delButton.Name.Equals(nameButton))
                 {
@@ -106,12 +46,12 @@ namespace coursework_examination_system
             return resultObject;
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        public void deleteButton_Click(object sender, EventArgs e)
         {
             try
             {
                 Button button = (Button)sender;
-                objectAnswer answer = findBlock(button.Name);
+                ObjectAnswersClass answer = findBlock(button.Name);
                 answer.checkBox.Visible = false;
                 answer.textBox.Visible = false;
                 answer.delButton.Visible = false;
@@ -120,6 +60,53 @@ namespace coursework_examination_system
             {
                 Console.WriteLine(exception.Message);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TabPageClass tpNew = new TabPageClass(this);
+            tpNew.BackColor = Color.White;
+            tpNew.groupBox3.BackColor = Color.White;
+            tpNew.groupBox2.BackColor = Color.White;
+            tpNew.Text = "Вопрос " + (tabControl1.TabPages.Count + 1);
+            tabControl1.TabPages.Add(tpNew);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+            for (int i = 0; i < tabControl1.TabPages.Count; i++)
+            {
+                tabControl1.TabPages[i].Text = "Вопрос " + (i + 1);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openImage = new OpenFileDialog();
+            if (openImage.ShowDialog() == DialogResult.OK)
+            {
+                ((TabPageClass)tabControl1.SelectedTab).filePath = openImage.FileName;
+                ((TabPageClass)tabControl1.SelectedTab).pictureBox.Image = Image.FromFile(openImage.FileName);
+                if (!((TabPageClass)tabControl1.SelectedTab).filePath.Equals(""))
+                {
+                    ((TabPageClass)tabControl1.SelectedTab).groupBox2.Controls.Remove(((TabPageClass)tabControl1.SelectedTab).pictureBox);
+                    ((TabPageClass)tabControl1.SelectedTab).groupBox2.Controls.Add(((TabPageClass)tabControl1.SelectedTab).pictureBox);
+                }
+                else
+                {
+                    ((TabPageClass)tabControl1.SelectedTab).groupBox2.Controls.Add(((TabPageClass)tabControl1.SelectedTab).pictureBox);
+                }
+                ((TabPageClass)tabControl1.SelectedTab).pictureBox.Location = new Point(0, 0);
+                ((TabPageClass)tabControl1.SelectedTab).pictureBox.Width = ((TabPageClass)tabControl1.SelectedTab).groupBox2.Width;
+                ((TabPageClass)tabControl1.SelectedTab).pictureBox.Height = ((TabPageClass)tabControl1.SelectedTab).groupBox2.Height;
+                ((TabPageClass)tabControl1.SelectedTab).pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

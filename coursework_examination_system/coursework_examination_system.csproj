@@ -67,10 +67,14 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectAnswersClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendRequestClass.cs" />
     <Compile Include="SubjectClass.cs" />
+    <Compile Include="TabPageClass.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TestClass.cs" />
     <Compile Include="TestMenuForm.cs">
       <SubType>Form</SubType>

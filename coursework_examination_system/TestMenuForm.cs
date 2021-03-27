@@ -13,28 +13,42 @@ namespace coursework_examination_system
         public TestMenuForm()
         {
             InitializeComponent();
-            String response = SendRequestClass.PostRequestAsync("getSubjects", "").Result;
-            subjects = JsonConvert.DeserializeObject<List<SubjectClass>>(response);
-            if(subjects.Count>0)
+            try
             {
-                comboBox1.DataSource = subjects;
-                comboBox1.SelectedIndex = 0;
-            } 
-            else 
+                String response = SendRequestClass.PostRequestAsync("getSubjects", "").Result;
+                subjects = JsonConvert.DeserializeObject<List<SubjectClass>>(response);
+                if (subjects.Count > 0)
+                {
+                    comboBox1.DataSource = subjects;
+                    comboBox1.SelectedIndex = 0;
+                }
+                else
+                {
+                    MessageBox.Show("В системе нет ни одного предмета, необходимо добавить!", "Нет предметов", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch(Exception exception)
             {
-                MessageBox.Show("В системе нет ни одного предмета, необходимо добавить!", "Нет предметов", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SubjectClass subjectSelect = (SubjectClass)comboBox1.SelectedItem;
-            String response = SendRequestClass.PostRequestAsync("getTests", "{ \"id\" : " + subjectSelect.Id + "} ").Result;
-            tests = JsonConvert.DeserializeObject<List<TestClass>>(response);
-            fillListBox();
-            if (tests.Count > 0)
+            try
             {
-                listBox1.SelectedIndex = 0;
+                SubjectClass subjectSelect = (SubjectClass)comboBox1.SelectedItem;
+                String response = SendRequestClass.PostRequestAsync("getTests", "{ \"id\" : " + subjectSelect.Id + "} ").Result;
+                tests = JsonConvert.DeserializeObject<List<TestClass>>(response);
+                fillListBox();
+                if (tests.Count > 0)
+                {
+                    listBox1.SelectedIndex = 0;
+                }
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
