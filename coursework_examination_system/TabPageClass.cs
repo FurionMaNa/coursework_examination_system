@@ -20,24 +20,24 @@ namespace coursework_examination_system
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox9;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        public System.Windows.Forms.TextBox textBox8;
+        public System.Windows.Forms.TextBox textBox9;
+        public System.Windows.Forms.TextBox textBox10;
+        public System.Windows.Forms.CheckBox checkBox7;
+        public System.Windows.Forms.CheckBox checkBox8;
+        public System.Windows.Forms.CheckBox checkBox9;
+        public System.Windows.Forms.TextBox textBox5;
+        public System.Windows.Forms.TextBox textBox6;
+        public System.Windows.Forms.TextBox textBox7;
+        public System.Windows.Forms.CheckBox checkBox4;
+        public System.Windows.Forms.CheckBox checkBox5;
+        public System.Windows.Forms.CheckBox checkBox6;
+        public System.Windows.Forms.TextBox textBox4;
+        public System.Windows.Forms.TextBox textBox3;
+        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.CheckBox checkBox3;
+        public System.Windows.Forms.CheckBox checkBox2;
+        public System.Windows.Forms.CheckBox checkBox1;
         public System.Windows.Forms.GroupBox groupBox2;
         public String filePath = "";
         public TextBox textBoxQuestion = new TextBox();
@@ -463,6 +463,58 @@ namespace coursework_examination_system
             objectA.textBox = textBox10;
             objectA.delButton = button15;
             objectAnswers.Add(objectA);
+        }
+
+        public bool isValidTab()
+        {
+            if (textBox2.Visible && textBox2.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox3.Visible && textBox3.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox4.Visible && textBox4.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox5.Visible && textBox5.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox6.Visible && textBox6.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox7.Visible && textBox7.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox8.Visible && textBox8.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox9.Visible && textBox9.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if (textBox10.Visible && textBox10.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            if(filePath.Length==0 && textBoxQuestion.Text.Trim().Length == 0)
+            {
+                return false;
+            }
+            foreach (Control control in groupBox3.Controls)
+            {
+                if(control is CheckBox && ((CheckBox)control).Checked)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

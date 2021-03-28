@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,6 +54,33 @@ namespace coursework_examination_system
             response.Close();
             Console.WriteLine(responseReturn);
             return responseReturn;
+        }
+
+        private static byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageIn.Save(ms, imageIn.RawFormat);
+                return ms.ToArray();
+            }
+        }
+
+        public static async Task<string> Upload(String method, String id, System.Drawing.Image image)
+        {
+            HttpClient client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, LoadSystem().server + method + ".php");
+            var content = new MultipartFormDataContent();
+
+            byte[] byteArray = ImageToByteArray(image);
+            content.Add(new ByteArrayContent(byteArray), "file", "file.jpg");
+            StringContent post = new StringContent(id);
+            content.Add(post);
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
         }
 
     }

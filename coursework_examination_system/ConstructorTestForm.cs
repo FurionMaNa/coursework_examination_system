@@ -149,10 +149,98 @@ namespace coursework_examination_system
 
         private void button3_Click(object sender, EventArgs e)
         {
+            int idTest = -1;
             if (textBox1.Text.Trim().Length == 0)
             {
                 MessageBox.Show("Тема теста не может быть пустой", "Пустые поля", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            foreach (TabPage tp in tabControl1.TabPages)
+            {
+                if (!((TabPageClass)tp).isValidTab())
+                {
+                    MessageBox.Show("Ошибка в вопросе " + tp.Text, "Ошибка в вопросе", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            String response = SendRequestClass.PostRequestAsync("addTest", "{\"id\": " + ((SubjectClass)comboBox1.SelectedItem).Id +
+                                                                                                                " ,\n\"name\" : \"" + textBox1.Text+ "\" }").Result;
+            if(response.Equals("\terror"))
+            {
+                MessageBox.Show("Ошибка при добавлении теста, обратитесь к админу", "Ошибка при добавлении теста", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            } 
+            else if ( response.Equals("\tДанный тест уже создан!!!"))
+            {
+
+                MessageBox.Show("Тест с таким названием уже существует", "Ошибка в названии", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                idTest = int.Parse(response);
+            }
+            foreach (TabPageClass tp in tabControl1.TabPages)
+            {
+                int idQuestion = -1;
+                if (tp.filePath.Length == 0)
+                {
+                    IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
+                    response = SendRequestClass.PostRequestAsync("addQuestionText", JsonConvert.SerializeObject(question)).Result;
+                    if (response.Equals("\terror"))
+                    {
+                        MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    else
+                    {
+                        idQuestion = int.Parse(response);
+                    }
+                } 
+                else
+                {
+                    //IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
+                    //response = SendRequestClass.Upload("addQuestionText", "id = " + idTest, tp.pictureBox.Image).Result;
+
+                }
+                if (tp.textBox2.Text.Length > 0)  addAnswer(tp.checkBox1, tp.textBox2, idQuestion);
+                if (tp.textBox3.Text.Length > 0)  addAnswer(tp.checkBox2, tp.textBox3, idQuestion);
+                if (tp.textBox4.Text.Length > 0)  addAnswer(tp.checkBox3, tp.textBox4, idQuestion);
+                if (tp.textBox5.Text.Length > 0)  addAnswer(tp.checkBox4, tp.textBox5, idQuestion);
+                if (tp.textBox6.Text.Length > 0)  addAnswer(tp.checkBox5, tp.textBox6, idQuestion);
+                if (tp.textBox7.Text.Length > 0)  addAnswer(tp.checkBox6, tp.textBox7, idQuestion);
+                if (tp.textBox8.Text.Length > 0)  addAnswer(tp.checkBox7, tp.textBox8, idQuestion);
+                if (tp.textBox9.Text.Length > 0)  addAnswer(tp.checkBox8, tp.textBox9, idQuestion);
+                if (tp.textBox10.Text.Length > 0)  addAnswer(tp.checkBox9, tp.textBox10, idQuestion);
             }
         }
+
+        private void addAnswer(CheckBox checkBox, TextBox textBox, int idQuestion)
+        {
+            Console.WriteLine("{\"id\": " + idQuestion +
+                                                                                                          " ,\"name\" : \"" + textBox.Text + "\" ," +
+                                                                                                          "\"correct\" : " + (checkBox.Checked ? 1 : 0) + "}");
+            String response = SendRequestClass.PostRequestAsync("addAnswer", "{\"id\": " + idQuestion +
+                                                                                                          " ,\"name\" : \"" + textBox.Text + "\" ," +
+                                                                                                          "\"correct\" : "+(checkBox.Checked ? 1 : 0 )+"}").Result;
+            if (response.Equals("\terror"))
+            {
+                MessageBox.Show("Ошибка при добавлении ответа, обратитесь к админу", "Ошибка при добавлении ответа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        protected class IdNameClass
+        {
+            public int id;
+            public string name;
+
+            public IdNameClass(int id, string name)
+            {
+                this.id = id;
+                this.name = name;
+            }
+        }
+
     }
 }
