@@ -68,19 +68,18 @@ namespace coursework_examination_system
         public static async Task<string> Upload(String method, String id, System.Drawing.Image image)
         {
             HttpClient client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, LoadSystem().server + method + ".php");
+            var request = new HttpRequestMessage(HttpMethod.Post, LoadSystem().server + method + ".php?" + id);
             var content = new MultipartFormDataContent();
 
             byte[] byteArray = ImageToByteArray(image);
             content.Add(new ByteArrayContent(byteArray), "file", "file.jpg");
-            StringContent post = new StringContent(id);
-            content.Add(post);
             request.Content = content;
-
-            var response = await client.SendAsync(request);
+            Console.WriteLine("Запрос с картинкой отправляется");
+            var response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            string res = await response.Content.ReadAsStringAsync(); ;
+            Console.WriteLine(res);
+            return res;
         }
 
     }

@@ -196,12 +196,20 @@ namespace coursework_examination_system
                     {
                         idQuestion = int.Parse(response);
                     }
-                } 
+                }
                 else
                 {
-                    //IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
-                    //response = SendRequestClass.Upload("addQuestionText", "id = " + idTest, tp.pictureBox.Image).Result;
-
+                    Console.WriteLine("FG");
+                    IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
+                    response = SendRequestClass.Upload("addQuestionImage", "id=" + idTest, tp.pictureBox.Image).Result;
+                    if ((response != null && response.Equals("error")) || (response ==null))
+                    {
+                        MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }  else
+                    {
+                        idQuestion = int.Parse(response);
+                    }
                 }
                 if (tp.textBox2.Text.Length > 0)  addAnswer(tp.checkBox1, tp.textBox2, idQuestion);
                 if (tp.textBox3.Text.Length > 0)  addAnswer(tp.checkBox2, tp.textBox3, idQuestion);
