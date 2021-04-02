@@ -43,8 +43,11 @@ namespace coursework_examination_system
         public TextBox textBoxQuestion = new TextBox();
         public bool textBoxCreate = false;
         public PictureBox pictureBox = new PictureBox();
+        public int idQuestion =-1;
 
         public List<ObjectAnswersClass> objectAnswers = new List<ObjectAnswersClass>();
+        public List<int> answerId = new List<int>();
+
 
         public TabPageClass(ConstructorTestForm constr)
         {

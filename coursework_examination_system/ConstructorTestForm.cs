@@ -9,10 +9,10 @@ namespace coursework_examination_system
 {
     public partial class ConstructorTestForm : Form
     {
-
+        private AllTestClass allTest;
         private List<SubjectClass> subjects;
 
-        public ConstructorTestForm()
+        public ConstructorTestForm(int idTest)
         {
             InitializeComponent();
             try
@@ -33,7 +33,58 @@ namespace coursework_examination_system
             {
                 MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            button1_Click(new Object(), new EventArgs());
+            if (idTest > -1)
+            {
+                String response = SendRequestClass.PostRequestAsync("getTest", "{ \"id\" : " + idTest + " }").Result;
+                allTest = JsonConvert.DeserializeObject<AllTestClass>(response);
+                textBox1.Text = allTest.Name;
+                for (int i = 0; i < subjects.Count; i++)
+                {
+                    if (subjects[i].Id == allTest.subject)
+                    {
+                        comboBox1.SelectedIndex = i;
+                    }
+                }
+                allTest.questions.ForEach(delegate (QuestionClass question)
+                {
+                    button1_Click(new Object(), new EventArgs());
+                    ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count-1]).idQuestion = question.id;
+                    if (question.type == 0)
+                    {
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Controls.Add(((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion);
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion.Text = question.question;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion.Location = new Point(10, 20);
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion.Width = ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Width - 20;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion.Height = ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Height - 30;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxQuestion.Multiline = true;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).textBoxCreate = true;
+                    } 
+                    else
+                    {
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Controls.Add(((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox); 
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Location = new Point(10, 20);
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Width = ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Width - 20;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Height = ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Height - 30;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Load(question.question);
+                    }
+                    ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).idQuestion = question.id;
+                    int indexAnswer = 0;
+                    question.answers.ForEach(delegate (AnswerClass answer)
+                    {
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].checkBox.Visible = true;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].textBox.Visible = true;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].delButton.Visible = true;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].checkBox.Checked = answer.correct == 1;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].textBox.Text = answer.answer;
+                        indexAnswer++;
+                    });
+                });
+            }
+            else
+            {
+                button1_Click(new Object(), new EventArgs());
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)

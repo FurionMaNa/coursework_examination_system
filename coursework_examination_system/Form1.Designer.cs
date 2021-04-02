@@ -41,6 +41,7 @@ namespace coursework_examination_system
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оАвтореToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ListTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +62,7 @@ namespace coursework_examination_system
             // 
             this.системаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createTestToolStripMenuItem,
+            this.ListTestToolStripMenuItem,
             this.создатьПользователяToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.системаToolStripMenuItem.Name = "системаToolStripMenuItem";
@@ -71,7 +73,7 @@ namespace coursework_examination_system
             // 
             this.createTestToolStripMenuItem.Name = "createTestToolStripMenuItem";
             this.createTestToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.createTestToolStripMenuItem.Text = "Конструктор тестов";
+            this.createTestToolStripMenuItem.Text = "Создать тест";
             this.createTestToolStripMenuItem.Click += new System.EventHandler(this.createTestToolStripMenuItem_Click);
             // 
             // создатьПользователяToolStripMenuItem
@@ -135,6 +137,13 @@ namespace coursework_examination_system
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "Window";
             // 
+            // ListTestToolStripMenuItem
+            // 
+            this.ListTestToolStripMenuItem.Name = "ListTestToolStripMenuItem";
+            this.ListTestToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.ListTestToolStripMenuItem.Text = "Список тестов";
+            this.ListTestToolStripMenuItem.Click += new System.EventHandler(this.ListTestToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +178,7 @@ namespace coursework_examination_system
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оАвтореToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ListTestToolStripMenuItem;
     }
 }
 

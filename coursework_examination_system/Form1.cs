@@ -24,7 +24,7 @@ namespace coursework_examination_system
 
         private void TestMenuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TestMenuForm testMenu = new TestMenuForm();
+            TestMenuForm testMenu = new TestMenuForm(false);
             testMenu.MdiParent = this;
             testMenu.Show();
         }
@@ -36,9 +36,19 @@ namespace coursework_examination_system
 
         private void createTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConstructorTestForm constructorTestForm = new ConstructorTestForm();
+            ConstructorTestForm constructorTestForm = new ConstructorTestForm(-1);
             constructorTestForm.MdiParent = this;
             constructorTestForm.Show();
         }
+
+        private void ListTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestMenuForm testMenu = new TestMenuForm(true);
+            testMenu.MdiParent = this;
+            testMenu.Show();
+
+        }
+        
+   
     }
 }

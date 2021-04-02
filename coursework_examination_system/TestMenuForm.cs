@@ -10,9 +10,36 @@ namespace coursework_examination_system
         private List<SubjectClass> subjects;
         private List<TestClass> tests;
 
-        public TestMenuForm()
+        public TestMenuForm(bool editing)
         {
             InitializeComponent();
+            if (editing)
+            {
+                this.Controls.Remove(button1);
+                Button updateButton = new Button();
+                updateButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left))));
+                updateButton.Location = new System.Drawing.Point(12, 389);
+                updateButton.Name = "button1";
+                updateButton.Size = new System.Drawing.Size(196, 31);
+                updateButton.TabIndex = 1;
+                updateButton.Text = "Изменить тест";
+                updateButton.UseVisualStyleBackColor = true;
+                updateButton.Click += new System.EventHandler(this.updateButton_Click);
+
+                Button deleteButton = new Button();
+                deleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right))));
+                deleteButton.Location = new System.Drawing.Point(211, 389);
+                deleteButton.Name = "button1";
+                deleteButton.Size = new System.Drawing.Size(196, 31);
+                deleteButton.TabIndex = 1;
+                deleteButton.Text = "Изменить тест";
+                deleteButton.UseVisualStyleBackColor = true;
+                deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+
+                this.Controls.Add(updateButton);
+                this.Controls.Add(deleteButton);
+
+            }
             try
             {
                 String response = SendRequestClass.PostRequestAsync("getSubjects", "").Result;
@@ -31,6 +58,18 @@ namespace coursework_examination_system
             {
                 MessageBox.Show("Проверьте соединение с интернетом!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            ConstructorTestForm constructorTestForm = new ConstructorTestForm(((TestClass)listBox1.SelectedItem).Id);
+            constructorTestForm.MdiParent = Form1.ActiveForm;
+            constructorTestForm.Show();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
