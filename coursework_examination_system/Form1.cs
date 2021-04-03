@@ -14,6 +14,7 @@ namespace coursework_examination_system
     {
         public static UserClass user;
         private LoginForm loginForm;
+        public static RefreshClass refresEventClass = new RefreshClass();
 
         public Form1(UserClass user, LoginForm loginForm)
         {
@@ -48,7 +49,17 @@ namespace coursework_examination_system
             testMenu.Show();
 
         }
-        
-   
+
+        private void createUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAddUser addUserForm = new FormAddUser();
+            addUserForm.MdiParent = this;
+            addUserForm.Show();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

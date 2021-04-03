@@ -32,14 +32,15 @@ namespace coursework_examination_system
                 deleteButton.Name = "button1";
                 deleteButton.Size = new System.Drawing.Size(196, 31);
                 deleteButton.TabIndex = 1;
-                deleteButton.Text = "Изменить тест";
+                deleteButton.Text = "Удалить тест";
                 deleteButton.UseVisualStyleBackColor = true;
                 deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
 
                 this.Controls.Add(updateButton);
                 this.Controls.Add(deleteButton);
-
             }
+
+            Form1.refresEventClass.events += new RefreshClass.EventButtonClickHandler(button2_Click);
             try
             {
                 String response = SendRequestClass.PostRequestAsync("getSubjects", "").Result;
@@ -62,7 +63,17 @@ namespace coursework_examination_system
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-
+            String response = SendRequestClass.PostRequestAsync("deleteTest", "{ \"id\" : " + ((TestClass)listBox1.SelectedItem).Id + " }").Result;
+            if (response.Equals("\terror"))
+            {
+                MessageBox.Show("Ошибка при удалении теста, обратитесь к админу", "Ошибка при удалении теста", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            } 
+            else
+            {
+                MessageBox.Show("Тест успешно удалён!", "Успешное удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Form1.refresEventClass.StartRefreshEvent(sender, e);
+            }
         }
 
         private void updateButton_Click(object sender, EventArgs e)
