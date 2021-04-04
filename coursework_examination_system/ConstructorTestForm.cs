@@ -11,6 +11,8 @@ namespace coursework_examination_system
     {
         private AllTestClass allTest;
         private List<SubjectClass> subjects;
+        private List<int> idDelAnswer = new List<int>();
+        private List<int> idDelQuestion = new List<int>();
 
         public ConstructorTestForm(int idTest)
         {
@@ -67,6 +69,7 @@ namespace coursework_examination_system
                         ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Height = ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).groupBox2.Height - 30;
                         ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).pictureBox.Load(question.question);
+                        ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).filePath = question.question;
                     }
                     ((TabPageClass)tabControl1.TabPages[tabControl1.TabPages.Count - 1]).idQuestion = question.id;
                     int indexAnswer = 0;
@@ -77,6 +80,8 @@ namespace coursework_examination_system
                         ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].delButton.Visible = true;
                         ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].checkBox.Checked = answer.correct == 1;
                         ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].textBox.Text = answer.answer;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].delButton.Tag = answer.id;
+                        ((TabPageClass)tabControl1.SelectedTab).objectAnswers[indexAnswer].textBox.Tag = answer.id;
                         indexAnswer++;
                     });
                 });
@@ -122,7 +127,12 @@ namespace coursework_examination_system
                 ObjectAnswersClass answer = findBlock(button.Name);
                 answer.checkBox.Visible = false;
                 answer.textBox.Visible = false;
+                answer.textBox.Text = "";
                 answer.delButton.Visible = false;
+                if (button.Tag != null)
+                {
+                    idDelAnswer.Add((int)button.Tag);
+                }
             } 
             catch (Exception exception)
             {
@@ -146,6 +156,10 @@ namespace coursework_examination_system
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if(((TabPageClass)tabControl1.SelectedTab).idQuestion != -1)
+            {
+                idDelQuestion.Add(((TabPageClass)tabControl1.SelectedTab).idQuestion);
+            }
             tabControl1.TabPages.Remove(tabControl1.SelectedTab);
             for (int i = 0; i < tabControl1.TabPages.Count; i++)
             {
@@ -198,90 +212,195 @@ namespace coursework_examination_system
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private bool validationTest()
         {
-            int idTest = -1;
-            if (textBox1.Text.Trim().Length == 0)
-            {
+            if(textBox1.Text.Trim().Length == 0)
+                {
                 MessageBox.Show("Тема теста не может быть пустой", "Пустые поля", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
             foreach (TabPage tp in tabControl1.TabPages)
             {
                 if (!((TabPageClass)tp).isValidTab())
                 {
                     MessageBox.Show("Ошибка в вопросе " + tp.Text, "Ошибка в вопросе", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return false;
                 }
             }
-            String response = SendRequestClass.PostRequestAsync("addTest", "{\"id\": " + ((SubjectClass)comboBox1.SelectedItem).Id +
-                                                                                                                " ,\n\"name\" : \"" + textBox1.Text+ "\" }").Result;
-            if(response.Equals("\terror"))
-            {
-                MessageBox.Show("Ошибка при добавлении теста, обратитесь к админу", "Ошибка при добавлении теста", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            } 
-            else if ( response.Equals("\tДанный тест уже создан!!!"))
-            {
+            return true;
+        }
 
-                MessageBox.Show("Тест с таким названием уже существует", "Ошибка в названии", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int idTest = -1;
+            String response;
+            if (!validationTest())
+            {
                 return;
+            }
+            if (allTest == null)
+            {
+                response = SendRequestClass.PostRequestAsync("addTest", "{\"id\": " + ((SubjectClass)comboBox1.SelectedItem).Id +
+                                                                                                                    " ,\n\"name\" : \"" + textBox1.Text + "\" }").Result;
+                if (response.Equals("\terror"))
+                {
+                    MessageBox.Show("Ошибка при добавлении теста, обратитесь к админу", "Ошибка при добавлении теста", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (response.Equals("\tДанный тест уже создан!!!"))
+                {
+
+                    MessageBox.Show("Тест с таким названием уже существует", "Ошибка в названии", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    idTest = int.Parse(response);
+                }
             }
             else
             {
-                idTest = int.Parse(response);
+                idTest = allTest.Id;
+                response = SendRequestClass.PostRequestAsync("updateTest", "{\"idTest\": " + idTest +
+                                                                                                                    " ,\n\"name\" : \"" + textBox1.Text + "\"" +
+                                                                                                                    " ,\n\"idSubject\"  : " + ((SubjectClass)comboBox1.SelectedItem).Id + " }").Result;
+                if (response.Equals("\terror"))
+                {
+                    MessageBox.Show("Ошибка при обновлении теста, обратитесь к админу", "Ошибка при обновлении теста", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (response.Equals("\tДанный тест уже создан!!!"))
+                {
+
+                    MessageBox.Show("Тест с таким названием уже существует", "Ошибка в названии", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    idTest = int.Parse(!response.Contains("\t") ? response : allTest.Id.ToString());
+                }
             }
             foreach (TabPageClass tp in tabControl1.TabPages)
             {
                 int idQuestion = -1;
+                if (idTest != allTest.Id)
+                {
+                    tp.idQuestion = -1;
+                }
                 if (tp.filePath.Length == 0)
                 {
-                    IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
-                    response = SendRequestClass.PostRequestAsync("addQuestionText", JsonConvert.SerializeObject(question)).Result;
-                    if (response.Equals("\terror"))
+                    if (tp.idQuestion == -1)
                     {
-                        MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
+                        response = SendRequestClass.PostRequestAsync("addQuestionText", JsonConvert.SerializeObject(question)).Result;
+                        if (response.Equals("\terror"))
+                        {
+                            MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                        {
+                            idQuestion = int.Parse(response);
+                        }
                     }
                     else
                     {
-                        idQuestion = int.Parse(response);
+                        idQuestion = tp.idQuestion;
+                        IdNameClass question = new IdNameClass(idQuestion, tp.textBoxQuestion.Text);
+                        response = SendRequestClass.PostRequestAsync("updateQuestionText", JsonConvert.SerializeObject(question)).Result;
+                        if (response.Equals("\terror"))
+                        {
+                            MessageBox.Show("Ошибка при обновлении вопроса, обратитесь к админу", "Ошибка при обновлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                        {
+                            idQuestion = int.Parse(!response.Contains("\t") ? response : idQuestion.ToString());
+                        }
                     }
                 }
                 else
                 {
-                    Console.WriteLine("FG");
-                    IdNameClass question = new IdNameClass(idTest, tp.textBoxQuestion.Text);
-                    response = SendRequestClass.Upload("addQuestionImage", "id=" + idTest, tp.pictureBox.Image).Result;
-                    if ((response != null && response.Equals("error")) || (response ==null))
+                    if (tp.idQuestion == -1)
                     {
-                        MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }  else
+                        response = SendRequestClass.Upload("addQuestionImage", "idTest=" + idTest, tp.pictureBox.Image).Result;
+                        if ((response != null && (response.Equals("\terror") || response.Equals("\t"))) || (response == null))
+                        {
+                            MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                        {
+                            idQuestion = int.Parse(response);
+                        }
+                    }
+                    else
                     {
-                        idQuestion = int.Parse(response);
+                        idQuestion = tp.idQuestion;
+                        response = SendRequestClass.Upload("updateQuestionImage", "idTest=" + idTest + "&idQuestion=" + tp.idQuestion, tp.pictureBox.Image).Result;
+                        if (response != null && response.Equals("error"))
+                        {
+                            MessageBox.Show("Ошибка при добавлении вопроса, обратитесь к админу", "Ошибка при добавлении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                        {
+                            idQuestion = int.Parse(!response.Contains("\t") ? response : idQuestion.ToString());
+                        }
                     }
                 }
-                if (tp.textBox2.Text.Length > 0)  addAnswer(tp.checkBox1, tp.textBox2, idQuestion);
-                if (tp.textBox3.Text.Length > 0)  addAnswer(tp.checkBox2, tp.textBox3, idQuestion);
-                if (tp.textBox4.Text.Length > 0)  addAnswer(tp.checkBox3, tp.textBox4, idQuestion);
-                if (tp.textBox5.Text.Length > 0)  addAnswer(tp.checkBox4, tp.textBox5, idQuestion);
-                if (tp.textBox6.Text.Length > 0)  addAnswer(tp.checkBox5, tp.textBox6, idQuestion);
-                if (tp.textBox7.Text.Length > 0)  addAnswer(tp.checkBox6, tp.textBox7, idQuestion);
-                if (tp.textBox8.Text.Length > 0)  addAnswer(tp.checkBox7, tp.textBox8, idQuestion);
-                if (tp.textBox9.Text.Length > 0)  addAnswer(tp.checkBox8, tp.textBox9, idQuestion);
-                if (tp.textBox10.Text.Length > 0)  addAnswer(tp.checkBox9, tp.textBox10, idQuestion);
+                if (tp.textBox2.Text.Length > 0) addAnswer(tp.checkBox1, tp.textBox2, idQuestion);
+                if (tp.textBox3.Text.Length > 0) addAnswer(tp.checkBox2, tp.textBox3, idQuestion);
+                if (tp.textBox4.Text.Length > 0) addAnswer(tp.checkBox3, tp.textBox4, idQuestion);
+                if (tp.textBox5.Text.Length > 0) addAnswer(tp.checkBox4, tp.textBox5, idQuestion);
+                if (tp.textBox6.Text.Length > 0) addAnswer(tp.checkBox5, tp.textBox6, idQuestion);
+                if (tp.textBox7.Text.Length > 0) addAnswer(tp.checkBox6, tp.textBox7, idQuestion);
+                if (tp.textBox8.Text.Length > 0) addAnswer(tp.checkBox7, tp.textBox8, idQuestion);
+                if (tp.textBox9.Text.Length > 0) addAnswer(tp.checkBox8, tp.textBox9, idQuestion);
+                if (tp.textBox10.Text.Length > 0) addAnswer(tp.checkBox9, tp.textBox10, idQuestion);
+                idDelQuestion.ForEach(delegate (int id)
+                {
+                    response = SendRequestClass.PostRequestAsync("deleteQuestion", "{ \"id\" : "+id+"}").Result;
+                    if (response.Equals("\terror"))
+                    {
+                        MessageBox.Show("Ошибка при удалении вопроса, обратитесь к админу", "Ошибка при удалении вопроса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+                idDelAnswer.ForEach(delegate (int id)
+                {
+                    response = SendRequestClass.PostRequestAsync("deleteAnswer", "{ \"id\" : " + id + "}").Result;
+                    if (response.Equals("\terror"))
+                    {
+                        MessageBox.Show("Ошибка при удалении ответа, обратитесь к админу", "Ошибка при удалении ответа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+            }
+            if (allTest != null)
+            {
+                MessageBox.Show("Тест успешно обновлён", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Тест успешно создан", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void addAnswer(CheckBox checkBox, TextBox textBox, int idQuestion)
         {
-            Console.WriteLine("{\"id\": " + idQuestion +
-                                                                                                          " ,\"name\" : \"" + textBox.Text + "\" ," +
-                                                                                                          "\"correct\" : " + (checkBox.Checked ? 1 : 0) + "}");
-            String response = SendRequestClass.PostRequestAsync("addAnswer", "{\"id\": " + idQuestion +
-                                                                                                          " ,\"name\" : \"" + textBox.Text + "\" ," +
-                                                                                                          "\"correct\" : "+(checkBox.Checked ? 1 : 0 )+"}").Result;
+            String response;
+            if (textBox.Tag!=null)
+            {
+                response = SendRequestClass.PostRequestAsync("updateAnswer", "{\"idAnswer\": " + textBox.Tag +
+                                                                                                              " ,\"name\" : \"" + textBox.Text + "\" ," +
+                                                                                                              "\"correct\" : " + (checkBox.Checked ? 1 : 0) +
+                                                                                                              ", \"idQuestion\" : " + idQuestion + "}").Result;
+            }
+            else
+            {
+                response = SendRequestClass.PostRequestAsync("addAnswer", "{\"id\": " + idQuestion +
+                                                                                                              " ,\"name\" : \"" + textBox.Text + "\" ," +
+                                                                                                              "\"correct\" : " + (checkBox.Checked ? 1 : 0) + "}").Result;
+            }
             if (response.Equals("\terror"))
             {
                 MessageBox.Show("Ошибка при добавлении ответа, обратитесь к админу", "Ошибка при добавлении ответа", MessageBoxButtons.OK, MessageBoxIcon.Error);
