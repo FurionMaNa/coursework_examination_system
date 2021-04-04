@@ -383,6 +383,7 @@ namespace coursework_examination_system
             {
                 MessageBox.Show("Тест успешно создан", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            Form1.refresEventClass.StartRefreshEvent(sender, e);
         }
 
         private void addAnswer(CheckBox checkBox, TextBox textBox, int idQuestion)

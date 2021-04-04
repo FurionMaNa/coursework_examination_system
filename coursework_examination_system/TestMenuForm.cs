@@ -142,7 +142,9 @@ namespace coursework_examination_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //todo добавить открытие формы с прохождением теста
+            TestingForm testingForm = new TestingForm(((TestClass)listBox1.SelectedItem).Id);
+            testingForm.MdiParent = this.MdiParent;
+            testingForm.Show();
         }
     }
 }

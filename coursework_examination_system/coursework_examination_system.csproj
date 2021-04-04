@@ -86,6 +86,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TestClass.cs" />
+    <Compile Include="TestingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestingForm.Designer.cs">
+      <DependentUpon>TestingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TestingForm.resx">
+      <DependentUpon>TestingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestMenuForm.resx">
       <DependentUpon>TestMenuForm.cs</DependentUpon>
     </EmbeddedResource>
