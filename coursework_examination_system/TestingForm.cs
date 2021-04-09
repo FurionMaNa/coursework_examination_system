@@ -20,7 +20,8 @@ namespace coursework_examination_system
             public Size size;
         }
 
-        int countCorrectAnswer = 0; 
+        int countCorrectAnswer = 0;
+        int allCountCorrect = 0;
         private AllTestClass allTest;
         private int idTest;
         private int index = 0;
@@ -30,7 +31,6 @@ namespace coursework_examination_system
         public TestingForm(int id)
         {
             idTest = id;
-
             coord[0].point = new System.Drawing.Point(7, 20);
             coord[0].size = new System.Drawing.Size(15, 14);
             coord[1].point = new System.Drawing.Point(7, 74);
@@ -93,6 +93,7 @@ namespace coursework_examination_system
                 groupBox2.Controls.Clear();
                 allTest.questions[index].answers.ForEach(delegate (AnswerClass answer) {
                     countCorrect+=answer.correct;
+                    allCountCorrect += answer.correct;
                 });
                 if (countCorrect > 1)
                 {
@@ -101,9 +102,11 @@ namespace coursework_examination_system
                     {
                         CheckBox answerBox = new CheckBox();
                         answerBox.Location = coord[i].point;
+                        answerBox.AutoSize = true;
                         answerBox.Text = answer.answer;
                         answerBox.Tag = answer.correct;
                         groupBox2.Controls.Add(answerBox);
+                        answerBox.CheckedChanged += AnswerBox_CheckedChanged;
                         i++;
                     });    
                 }
@@ -114,6 +117,7 @@ namespace coursework_examination_system
                     {
                         RadioButton answerBox = new RadioButton();
                         answerBox.Location = coord[i].point;
+                        answerBox.AutoSize = true;
                         answerBox.Text = answer.answer;
                         answerBox.Tag = answer.correct;
                         groupBox2.Controls.Add(answerBox);
@@ -122,6 +126,36 @@ namespace coursework_examination_system
                         i++;
                     });
                 }
+            }
+             else
+            {
+                int mark = 0;
+                if (countCorrectAnswer / allCountCorrect <= 0.5) {
+                    mark = 2;
+                } 
+                else if (countCorrectAnswer / allCountCorrect <= 0.7)
+                {
+                    mark = 3;
+                } 
+                else if (countCorrectAnswer / allCountCorrect <= 0.9)
+                {
+                    mark = 4;
+                }
+                else
+                {
+                    mark = 5;
+                }
+                MessageBox.Show("Ваш результат " + countCorrectAnswer + " из " + allCountCorrect + "\n" +
+                        "'это оценка " + mark, "Ваш результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine("{ \"idUser\" : " + Form1.user.id + " ,\n" +
+                                                                                                                                    " \"idTopic\" : " + allTest.Id + " ,\n" +
+                                                                                                                                    "\"scores\" : " + countCorrectAnswer + " , \n" +
+                                                                                                                                    "\"mark\" : " + mark + " }");
+                String response = SendRequestClass.PostRequestAsync("addResult", "{ \"idUser\" : " + Form1.user.id + " ,\n" +
+                                                                                                                                    " \"idTopic\" : " + allTest.Id + " ,\n" +
+                                                                                                                                    "\"scores\" : " + countCorrectAnswer + " , \n" +
+                                                                                                                                    "\"mark\" : " + mark + " }").Result;
+                this.Close();
             }
         }
 
@@ -132,10 +166,29 @@ namespace coursework_examination_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Пробигаемся по всем отмеченным пользователем ответам и проверяе Tag на наличие 1
-            //Колличество верных записываем в countCorrectAnswer
-            //Если вопрос предпологает возможность выбора нескольких ответов, то при наличии хотя бы одного правильно выбранного ответа
-            //все остальные не правильные будут вычитаться из суммы
+            foreach (Control item in groupBox2.Controls)
+            {
+                if (item is RadioButton)
+                {
+                    if (((RadioButton)item).Checked && (((RadioButton)item).Tag.ToString() == "1"))
+                    {
+                        countCorrectAnswer++;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (((CheckBox)item).Checked && (((CheckBox)item).Tag.ToString() == "1"))
+                    {
+                        countCorrectAnswer++;
+                    } 
+                    else if (((CheckBox)item).Checked)
+                    {
+                        countCorrectAnswer--;
+                    }
+
+                }
+            }
             index++;
             newListQuestion(index);
         }
