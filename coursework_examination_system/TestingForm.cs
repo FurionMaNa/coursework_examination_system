@@ -147,10 +147,6 @@ namespace coursework_examination_system
                 }
                 MessageBox.Show("Ваш результат " + countCorrectAnswer + " из " + allCountCorrect + "\n" +
                         "'это оценка " + mark, "Ваш результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Console.WriteLine("{ \"idUser\" : " + Form1.user.id + " ,\n" +
-                                                                                                                                    " \"idTopic\" : " + allTest.Id + " ,\n" +
-                                                                                                                                    "\"scores\" : " + countCorrectAnswer + " , \n" +
-                                                                                                                                    "\"mark\" : " + mark + " }");
                 String response = SendRequestClass.PostRequestAsync("addResult", "{ \"idUser\" : " + Form1.user.id + " ,\n" +
                                                                                                                                     " \"idTopic\" : " + allTest.Id + " ,\n" +
                                                                                                                                     "\"scores\" : " + countCorrectAnswer + " , \n" +

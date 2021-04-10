@@ -43,6 +43,16 @@ namespace coursework_examination_system
                         }
                         else
                         {
+                            Console.WriteLine("{ \"userName\" : \"" + textBox1.Text + "\" ,\n" +
+                                                                                                                                                " \"passport\" : " + textBox2.Text + " ,\n" +
+                                                                                                                                                "\"login\" : \"" + textBox3.Text + "\" , \n" +
+                                                                                                                                                "\"password\" : \"" + textBox4.Text + "\", \n" +
+                                                                                                                                                "\"status\" : " + (checkBox2.Checked ? 0 : 1) + " }");
+                            String response = SendRequestClass.PostRequestAsync("addUser", "{ \"userName\" : \"" + textBox1.Text + "\" ,\n" +
+                                                                                                                                                " \"passport\" : " + textBox2.Text + " ,\n" +
+                                                                                                                                                "\"login\" : \"" + textBox3.Text + "\" , \n" +
+                                                                                                                                                "\"password\" : \"" + textBox4.Text + "\", \n" +
+                                                                                                                                                "\"status\" : "+ (checkBox2.Checked ? 0 : 1 ) +" }").Result;
 
                         }
                     }
