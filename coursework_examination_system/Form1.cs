@@ -61,5 +61,12 @@ namespace coursework_examination_system
         {
             Application.Exit();
         }
+
+        private void getResultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResultForm resultForm = new ResultForm();
+            resultForm.MdiParent = this;
+            resultForm.Show();
+        }
     }
 }

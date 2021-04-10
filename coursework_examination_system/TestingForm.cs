@@ -155,6 +155,7 @@ namespace coursework_examination_system
                                                                                                                                     " \"idTopic\" : " + allTest.Id + " ,\n" +
                                                                                                                                     "\"scores\" : " + countCorrectAnswer + " , \n" +
                                                                                                                                     "\"mark\" : " + mark + " }").Result;
+                Form1.refresEventClass.StartRefreshEvent(this, new EventArgs());
                 this.Close();
             }
         }

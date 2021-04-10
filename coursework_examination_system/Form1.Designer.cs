@@ -37,7 +37,7 @@ namespace coursework_examination_system
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TestMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.посмотретьРезультатыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оАвтореToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +99,7 @@ namespace coursework_examination_system
             // 
             this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TestMenuToolStripMenuItem,
-            this.посмотретьРезультатыToolStripMenuItem});
+            this.getResultToolStripMenuItem});
             this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
             this.тестыToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.тестыToolStripMenuItem.Text = "Тесты";
@@ -111,11 +111,12 @@ namespace coursework_examination_system
             this.TestMenuToolStripMenuItem.Text = "Пройти тест";
             this.TestMenuToolStripMenuItem.Click += new System.EventHandler(this.TestMenuToolStripMenuItem_Click);
             // 
-            // посмотретьРезультатыToolStripMenuItem
+            // getResultToolStripMenuItem
             // 
-            this.посмотретьРезультатыToolStripMenuItem.Name = "посмотретьРезультатыToolStripMenuItem";
-            this.посмотретьРезультатыToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.посмотретьРезультатыToolStripMenuItem.Text = "Посмотреть результаты";
+            this.getResultToolStripMenuItem.Name = "getResultToolStripMenuItem";
+            this.getResultToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.getResultToolStripMenuItem.Text = "Посмотреть результаты";
+            this.getResultToolStripMenuItem.Click += new System.EventHandler(this.getResultToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -167,7 +168,7 @@ namespace coursework_examination_system
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TestMenuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem посмотретьРезультатыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getResultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оАвтореToolStripMenuItem;
