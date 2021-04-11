@@ -24,7 +24,7 @@ namespace coursework_examination_system
             Column3.Width = 80;
             Column4.Width = 50;
             Column5.Width = 130;
-            Form1.refresEventClass.events += new RefreshClass.EventButtonClickHandler(loadResult);
+            Form1.refresEventClass.eventsResult += new RefreshClass.EventRefreshResultHandler(loadResult);
             loadResult(this, new EventArgs());
         }
 

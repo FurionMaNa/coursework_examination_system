@@ -240,6 +240,8 @@ namespace coursework_examination_system
             }
             if (allTest == null)
             {
+                Console.WriteLine("{\"id\": " + ((SubjectClass)comboBox1.SelectedItem).Id +
+                                                                                                                    " ,\n\"name\" : \"" + textBox1.Text + "\" }");
                 response = SendRequestClass.PostRequestAsync("addTest", "{\"id\": " + ((SubjectClass)comboBox1.SelectedItem).Id +
                                                                                                                     " ,\n\"name\" : \"" + textBox1.Text + "\" }").Result;
                 if (response.Equals("\terror"))
@@ -283,7 +285,7 @@ namespace coursework_examination_system
             foreach (TabPageClass tp in tabControl1.TabPages)
             {
                 int idQuestion = -1;
-                if (idTest != allTest.Id)
+                if (allTest == null || idTest != allTest.Id)
                 {
                     tp.idQuestion = -1;
                 }
@@ -378,12 +380,13 @@ namespace coursework_examination_system
             if (allTest != null)
             {
                 MessageBox.Show("Тест успешно обновлён", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Form1.refresEventClass.StartRefreshEvent(this, new EventArgs());
             }
             else
             {
                 MessageBox.Show("Тест успешно создан", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Form1.refresEventClass.StartRefreshEvent(this, new EventArgs());
             }
-            Form1.refresEventClass.StartRefreshEvent(sender, e);
         }
 
         private void addAnswer(CheckBox checkBox, TextBox textBox, int idQuestion)

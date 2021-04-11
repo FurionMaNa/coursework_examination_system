@@ -470,39 +470,39 @@ namespace coursework_examination_system
 
         public bool isValidTab()
         {
-            if (textBox2.Visible && textBox2.Text.Trim().Length == 0)
+            if (textBox2.Visible && (textBox2.Text.Trim().Length == 0 || textBox2.Text.Length >30))
             {
                 return false;
             }
-            if (textBox3.Visible && textBox3.Text.Trim().Length == 0)
+            if (textBox3.Visible && textBox3.Text.Trim().Length == 0 || textBox3.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox4.Visible && textBox4.Text.Trim().Length == 0)
+            if (textBox4.Visible && textBox4.Text.Trim().Length == 0 || textBox4.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox5.Visible && textBox5.Text.Trim().Length == 0)
+            if (textBox5.Visible && textBox5.Text.Trim().Length == 0 || textBox5.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox6.Visible && textBox6.Text.Trim().Length == 0)
+            if (textBox6.Visible && textBox6.Text.Trim().Length == 0 || textBox6.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox7.Visible && textBox7.Text.Trim().Length == 0)
+            if (textBox7.Visible && textBox7.Text.Trim().Length == 0 || textBox7.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox8.Visible && textBox8.Text.Trim().Length == 0)
+            if (textBox8.Visible && textBox8.Text.Trim().Length == 0 || textBox8.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox9.Visible && textBox9.Text.Trim().Length == 0)
+            if (textBox9.Visible && textBox9.Text.Trim().Length == 0 || textBox9.Text.Length > 30)
             {
                 return false;
             }
-            if (textBox10.Visible && textBox10.Text.Trim().Length == 0)
+            if (textBox10.Visible && textBox10.Text.Trim().Length == 0 || textBox10.Text.Length > 30)
             {
                 return false;
             }

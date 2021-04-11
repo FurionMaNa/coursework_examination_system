@@ -32,23 +32,14 @@ namespace coursework_examination_system
         {
             idTest = id;
             coord[0].point = new System.Drawing.Point(7, 20);
-            coord[0].size = new System.Drawing.Size(15, 14);
             coord[1].point = new System.Drawing.Point(7, 74);
-            coord[1].size = new System.Drawing.Size(15, 14);
             coord[2].point = new System.Drawing.Point(7, 123);
-            coord[2].size = new System.Drawing.Size(15, 14);
             coord[3].point = new System.Drawing.Point(216, 20);
-            coord[3].size = new System.Drawing.Size(15, 14);
             coord[4].point = new System.Drawing.Point(216, 74);
-            coord[4].size = new System.Drawing.Size(15, 14);
             coord[5].point = new System.Drawing.Point(216, 123);
-            coord[5].size = new System.Drawing.Size(15, 14);
             coord[6].point = new System.Drawing.Point(421, 20);
-            coord[6].size = new System.Drawing.Size(15, 14);
             coord[7].point = new System.Drawing.Point(421, 74);
-            coord[7].size = new System.Drawing.Size(15, 14);
             coord[8].point = new System.Drawing.Point(421, 123);
-            coord[8].size = new System.Drawing.Size(15, 14);
             String response = SendRequestClass.PostRequestAsync("getTest", "{ \"id\" : " + idTest + " }").Result;
             allTest = JsonConvert.DeserializeObject<AllTestClass>(response);
             InitializeComponent();
@@ -103,6 +94,7 @@ namespace coursework_examination_system
                         CheckBox answerBox = new CheckBox();
                         answerBox.Location = coord[i].point;
                         answerBox.AutoSize = true;
+                        answerBox.Width = 150;
                         answerBox.Text = answer.answer;
                         answerBox.Tag = answer.correct;
                         groupBox2.Controls.Add(answerBox);
@@ -146,12 +138,13 @@ namespace coursework_examination_system
                     mark = 5;
                 }
                 MessageBox.Show("Ваш результат " + countCorrectAnswer + " из " + allCountCorrect + "\n" +
-                        "'это оценка " + mark, "Ваш результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        "это оценка " + mark, "Ваш результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 String response = SendRequestClass.PostRequestAsync("addResult", "{ \"idUser\" : " + Form1.user.id + " ,\n" +
                                                                                                                                     " \"idTopic\" : " + allTest.Id + " ,\n" +
                                                                                                                                     "\"scores\" : " + countCorrectAnswer + " , \n" +
                                                                                                                                     "\"mark\" : " + mark + " }").Result;
                 Form1.refresEventClass.StartRefreshEvent(this, new EventArgs());
+                Form1.refresEventClass.StartRefreshResultEvent(this, new EventArgs());
                 this.Close();
             }
         }
