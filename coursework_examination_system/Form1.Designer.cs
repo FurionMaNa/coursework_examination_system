@@ -30,7 +30,7 @@ namespace coursework_examination_system
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.системаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,15 +39,15 @@ namespace coursework_examination_system
             this.TestMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оАвтореToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.системаToolStripMenuItem,
+            this.systemToolStripMenuItem,
             this.тестыToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -56,16 +56,16 @@ namespace coursework_examination_system
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // системаToolStripMenuItem
+            // systemToolStripMenuItem
             // 
-            this.системаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.systemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createTestToolStripMenuItem,
             this.ListTestToolStripMenuItem,
             this.createUserToolStripMenuItem,
             this.exitToolStripMenuItem});
-            this.системаToolStripMenuItem.Name = "системаToolStripMenuItem";
-            this.системаToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.системаToolStripMenuItem.Text = "Система";
+            this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
+            this.systemToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.systemToolStripMenuItem.Text = "Система";
             // 
             // createTestToolStripMenuItem
             // 
@@ -121,23 +121,25 @@ namespace coursework_examination_system
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.оПрограммеToolStripMenuItem,
-            this.оАвтореToolStripMenuItem});
+            this.aboutAppToolStripMenuItem,
+            this.aboutAuthorToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // оПрограммеToolStripMenuItem
+            // aboutAppToolStripMenuItem
             // 
-            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.aboutAppToolStripMenuItem.Name = "aboutAppToolStripMenuItem";
+            this.aboutAppToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutAppToolStripMenuItem.Text = "О программе";
+            this.aboutAppToolStripMenuItem.Click += new System.EventHandler(this.aboutAppToolStripMenuItem_Click);
             // 
-            // оАвтореToolStripMenuItem
+            // aboutAuthorToolStripMenuItem
             // 
-            this.оАвтореToolStripMenuItem.Name = "оАвтореToolStripMenuItem";
-            this.оАвтореToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.оАвтореToolStripMenuItem.Text = "О авторе";
+            this.aboutAuthorToolStripMenuItem.Name = "aboutAuthorToolStripMenuItem";
+            this.aboutAuthorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutAuthorToolStripMenuItem.Text = "О авторе";
+            this.aboutAuthorToolStripMenuItem.Click += new System.EventHandler(this.aboutAuthorToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -162,7 +164,7 @@ namespace coursework_examination_system
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem системаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createUserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -170,8 +172,8 @@ namespace coursework_examination_system
         private System.Windows.Forms.ToolStripMenuItem TestMenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getResultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem оАвтореToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutAppToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutAuthorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ListTestToolStripMenuItem;
     }
 }

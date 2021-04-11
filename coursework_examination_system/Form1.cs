@@ -21,6 +21,10 @@ namespace coursework_examination_system
             InitializeComponent();
             Form1.user = user;
             this.loginForm = loginForm;
+            if (!user.status.Equals("0"))
+            {
+                systemToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void TestMenuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,6 +71,20 @@ namespace coursework_examination_system
             ResultForm resultForm = new ResultForm();
             resultForm.MdiParent = this;
             resultForm.Show();
+        }
+
+        private void aboutAppToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutAppForm aboutAppForm = new AboutAppForm();
+            aboutAppForm.MdiParent = this;
+            aboutAppForm.Show();
+        }
+
+        private void aboutAuthorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutAuthorForm aboutAuthorForm = new AboutAuthorForm();
+            aboutAuthorForm.MdiParent = this;
+            aboutAuthorForm.Show();
         }
     }
 }

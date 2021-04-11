@@ -65,7 +65,11 @@ namespace coursework_examination_system
 
         }
 
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SettingForm settingForm = new SettingForm();
+            settingForm.Show();
+        }
     }
 
 }

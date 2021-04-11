@@ -43,17 +43,22 @@ namespace coursework_examination_system
                         }
                         else
                         {
-                            Console.WriteLine("{ \"userName\" : \"" + textBox1.Text + "\" ,\n" +
-                                                                                                                                                " \"passport\" : " + textBox2.Text + " ,\n" +
-                                                                                                                                                "\"login\" : \"" + textBox3.Text + "\" , \n" +
-                                                                                                                                                "\"password\" : \"" + textBox4.Text + "\", \n" +
-                                                                                                                                                "\"status\" : " + (checkBox2.Checked ? 0 : 1) + " }");
                             String response = SendRequestClass.PostRequestAsync("addUser", "{ \"userName\" : \"" + textBox1.Text + "\" ,\n" +
                                                                                                                                                 " \"passport\" : " + textBox2.Text + " ,\n" +
                                                                                                                                                 "\"login\" : \"" + textBox3.Text + "\" , \n" +
                                                                                                                                                 "\"password\" : \"" + textBox4.Text + "\", \n" +
                                                                                                                                                 "\"status\" : "+ (checkBox2.Checked ? 0 : 1 ) +" }").Result;
-
+                            if (response.Contains("error"))
+                            {
+                                MessageBox.Show("Ошибка при создани пользователя, обратитесь к админу", "Ошибка при создания пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            } 
+                            else if (response.Length > 2)
+                            {
+                                MessageBox.Show(response, "Ошибка при создания пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            MessageBox.Show("Пользователь создан", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                 }
@@ -63,7 +68,7 @@ namespace coursework_examination_system
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number))
+            if (!Char.IsDigit(number) && e.KeyChar != (char)Keys.Back) 
             {
                 e.Handled = true;
             }
