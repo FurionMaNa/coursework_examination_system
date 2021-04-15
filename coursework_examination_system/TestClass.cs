@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace coursework_examination_system
 {
+    //Класс тест, наследуется от предмета
     class TestClass : SubjectClass
     {
     }

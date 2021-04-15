@@ -2,6 +2,7 @@
 
 namespace coursework_examination_system
 {
+    //Класс для хранения информации о создаваемом ответе
     class ObjectAnswersClass
     {
         public int i = -1;

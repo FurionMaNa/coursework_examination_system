@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма о авторе
     public partial class AboutAuthorForm : Form
     {
         public AboutAuthorForm()

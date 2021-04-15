@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма о приложении
     public partial class AboutAppForm : Form
     {
         public AboutAppForm()

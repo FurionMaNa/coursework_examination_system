@@ -11,9 +11,10 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма с результатами
     public partial class ResultForm : Form
     {
-
+        //Лист хранящий результаты
         public List<ResultClass> resultClasses = new List<ResultClass>();
 
         public ResultForm()

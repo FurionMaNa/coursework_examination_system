@@ -8,8 +8,10 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Класс хранящий страницу конструктора
     class TabPageClass : TabPage
     {
+        //Элементы конструктора
         public System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button14;
@@ -39,13 +41,19 @@ namespace coursework_examination_system
         public System.Windows.Forms.CheckBox checkBox2;
         public System.Windows.Forms.CheckBox checkBox1;
         public System.Windows.Forms.GroupBox groupBox2;
+        //Содержит путь до картинки
         public String filePath = "";
+        //Поле для ввода текста вопроса
         public TextBox textBoxQuestion = new TextBox();
+        //Флаг для проверки текущего объекта
         public bool textBoxCreate = false;
+        //Элемент для выаода картинки
         public PictureBox pictureBox = new PictureBox();
+        //ID вопроса, нужно для изменения
         public int idQuestion =-1;
-
+        //объекты в удобной форме *Опишу более конкретно потом*
         public List<ObjectAnswersClass> objectAnswers = new List<ObjectAnswersClass>();
+        //Id ответов, нужно для обновления
         public List<int> answerId = new List<int>();
 
 

@@ -10,10 +10,14 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Родительская форма
     public partial class Form1 : Form
-    {
+    { 
+        //содержит информацию о текущем пользователе
         public static UserClass user;
+        //Форма авторизации, нужна для закрытия
         private LoginForm loginForm;
+        //Объект для обновления
         public static RefreshClass refresEventClass = new RefreshClass();
 
         public Form1(UserClass user, LoginForm loginForm)

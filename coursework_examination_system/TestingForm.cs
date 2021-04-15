@@ -11,21 +11,26 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма тестирования
     public partial class TestingForm : Form
     {
-
+        //Координаты элементов на форме
         private struct coordSize
         {
             public Point point;
             public Size size;
         }
-
+        //Количество данных верных ответов
         int countCorrectAnswer = 0;
+        //Всего верных
         int allCountCorrect = 0;
+        //Содержит информацию о тесте
         private AllTestClass allTest;
+        //Id текущего теста
         private int idTest;
+        //Номер текущий вопрос
         private int index = 0;
-
+        //Массив с координатами ответов на форме
         coordSize[] coord = new coordSize[9];
 
         public TestingForm(int id)

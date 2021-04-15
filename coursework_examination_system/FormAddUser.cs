@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма для добавления пользователя
     public partial class FormAddUser : Form
     {
         public FormAddUser()

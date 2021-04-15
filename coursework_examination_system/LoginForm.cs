@@ -12,6 +12,8 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+
+    //Форма для авторизации
     public partial class LoginForm : Form
     {
         public LoginForm()

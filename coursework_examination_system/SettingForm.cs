@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма для настройки подключения
     public partial class SettingForm : Form
     {
         public SettingForm()

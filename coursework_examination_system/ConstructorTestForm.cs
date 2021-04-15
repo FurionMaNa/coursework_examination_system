@@ -7,11 +7,16 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //Форма конструктор, для изменения и добавления теста
     public partial class ConstructorTestForm : Form
     {
+        //Тест, содержит информацию о тесте, вопросах теста, варинтах ответов в вопросе
         private AllTestClass allTest;
+        //Список предметов
         private List<SubjectClass> subjects;
+        //Список id удаляемых ответов при изменении вопроса
         private List<int> idDelAnswer = new List<int>();
+        //Список id удаляемых вопросов при изменении теста
         private List<int> idDelQuestion = new List<int>();
 
         public ConstructorTestForm(int idTest)

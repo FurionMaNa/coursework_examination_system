@@ -5,9 +5,12 @@ using System.Windows.Forms;
 
 namespace coursework_examination_system
 {
+    //ФОрма с тестами
     public partial class TestMenuForm : Form
     {
+        //Содержит информацию о предметах
         private List<SubjectClass> subjects;
+        //Содержит инфу о тестах
         private List<TestClass> tests;
 
         public TestMenuForm(bool editing)

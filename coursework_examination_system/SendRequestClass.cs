@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace coursework_examination_system
 {
+    //Класс для отправки запроса
     class SendRequestClass
     {
 
